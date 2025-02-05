@@ -1,0 +1,4 @@
+# For .env
+.env*
+# For .DS_Store
+.xlsx
