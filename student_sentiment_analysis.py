@@ -27,7 +27,7 @@ nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
-file_path = "sample_data/Sentiment Data Collection Sheet.xlsx"
+file_path = "./Sentiment Data Collection Sheet.xlsx"
 
 all_sheets = pd.read_excel(file_path, sheet_name=None)
 
@@ -47,13 +47,13 @@ merged_data.columns = merged_data.columns.str.strip()
 # Here, we'll fill NaN with an empty string to avoid issues during concatenation.
 merged_data.fillna('', inplace=True)
 
-display(merged_data)
+# display(merged_data)
 otput = merged_data.to_excel('output.xlsx', index=False)
 merged_data.info()
 
 merged_data['Combined Feedback'] = merged_data.apply(lambda row: ' '.join(row.values.astype(str)), axis=1)
 
-display(merged_data)
+# display(merged_data)
 
 # Define preprocessing function
 
@@ -88,7 +88,7 @@ merged_data[columns_to_process] = merged_data[columns_to_process].map(preprocess
 # Now apply preprocess_text to the Combined Feedback column only
 
 merged_data['Combined Feedback'] = merged_data['Combined Feedback'].apply(preprocess_text)
-display(merged_data)
+# display(merged_data)
 
 
 
@@ -111,7 +111,7 @@ vaders = vaders.reset_index().rename(columns={'index': 'Id'})
 # Merging the vaders daaset with the original reviews_df
 
 vaders = vaders.merge(merged_data, on='Id', how='left')
-display(vaders.head())
+# display(vaders.head())
 
 import matplotlib.pyplot as plt
 
@@ -137,7 +137,7 @@ plt.tight_layout()
 plt.show()
 
 print(vaders[['neg', 'neu', 'pos', 'compound']].describe())
-display(vaders)
+# display(vaders)
 
 # Word Clouds for Positive and Negative Feedback
 from wordcloud import WordCloud
@@ -176,16 +176,16 @@ merged_feedback = {
 
 analyzer = SentimentIntensityAnalyzer()
 sentiment_scores = {question: analyzer.polarity_scores(feedback) for question, feedback in merged_feedback.items()}
-display(sentiment_scores)
+# display(sentiment_scores)
 
 # Convert the results to a dataframe for easier visualization
 # Transpose to have questions as rows
 
 sentiment_df = pd.DataFrame(sentiment_scores).T
-display(sentiment_df)
+# display(sentiment_df)
 
 sentiment_df.columns = ['Negative', 'Neutral', 'Positive', 'Compound']
-display(sentiment_df)
+# display(sentiment_df)
 
 # Plot sentiment distribution by question
 
@@ -227,4 +227,5 @@ for topic in topics:
 # Visualize LDA topics using pyLDAvis
 lda_visualization = gensimvis.prepare(lda_model, corpus, dictionary)
 pyLDAvis.display(lda_visualization)
+
 
