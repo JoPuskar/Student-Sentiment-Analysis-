@@ -1,5 +1,7 @@
 # For Environment 
 .env*
 env/
-# For .DS_Store
-.xlsx
+# For macOS
+.DS_Store
+# For Excel files
+*.xlsx
